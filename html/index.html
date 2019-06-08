@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>verb-conjugate-fr-web</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3pro.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        var xrmap = {
+          'infinitive': 'INFINTIF',
+          'indicative': 'INDICATIF',
+          'imperative': 'IMPÉRATIF',
+          'conditional': 'CONDITIONNEL',
+          'subjunctive': 'SUBJONCTIF',
+          'participle': 'PARTICIPE',
+          'present': 'Présent',
+          'imperfect': 'Imparfait',
+          'future': 'Futur',
+          'simple-past': 'Passé simple',
+          'infinitive-present': 'Présent',
+          'imperative-present': 'Présent',
+          'present-participle': 'Présent',
+          'past-participle': 'Passé'
+        }
+        function xr(s) {
+          return xrmap[s];
+        }
+
+        function gen_tense(tense_name, tense) {
+          var html = '<div class="w3-cell-row tense-wrapper">';
+          html += '<div class="h-centered">' + xr(tense_name) + '</div>';
+          $.each(tense, function(i, val) {
+            html += val + '<br/>';
+          });
+          html += '</div>';
+          return html;
+        }
+
+        function gen_mood(mood_name, mood) {
+          var html = '<div class="w3-cell-row mood-wrapper">';
+          html += '<div class="h-centered"><h3>' + xr(mood_name) + '</h3></div>';
+          $.each(mood, function(tense_name, tense) {
+            html += gen_tense(tense_name, tense);
+          });
+          html += '</div>';
+          $('#conjugation_div').append(html);
+        }
+
+        function conjugate(verb) {
+          $.getJSON("http://localhost:8000/conjugate/" + verb, 
+            function(data) {
+            console.log("got it");
+            $.each(data['value']['moods'], function(mood_name, mood) {
+              gen_mood(mood_name, mood);
+            });
+          })
+          .fail(function(jqXHR, textStatus, errorThrown) {
+            $('#conjugation_div').html(jqXHR.responseJSON.detail);
+          })
+        }
+
+        $(function() {
+          $('#conjugate_btn').click(function() {
+            conjugate($('#verb_input').val());
+          });
+          $('#verb_input').change(function() {
+            conjugate($(this).val());
+          })
+        });
+    </script>
+    <style type="text/css">
+      .outer-wrapper {
+        border: #a2b3d4 1px solid;
+        margin: 10px;
+        -webkit-border-radius: 4px;
+        border-radius: 4px;
+      } 
+      .mood-wrapper {
+        border: 0;
+        margin: 10px;
+        -webkit-border-radius: 4px;
+        border-radius: 4px;
+      }
+      .tense-wrapper {
+        background: #a2b3d4;
+        margin: 10px;
+        -webkit-border-radius: 4px;
+        border-radius: 4px;
+      }
+      .h-centered {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="w3-container">
+      <h1>verb-conjugate-fr</h1>
+    </header>
+
+    <div class="w3-container">
+      <input type="text" id="verb_input" />
+      <input type="button" value="Conjugate" id="conjugate_btn" />
+    </div>
+
+    <div class="w3-container outer-wrapper" id="conjugation_div">
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,12 @@
+version: '3'
+services:
+  web:
+    build: .
+    volumes:
+      - ./html:/usr/share/nginx/html
+    ports:
+      - "80:80"
+  verb_conjugate_fr:
+    image: "verb_conjugate_fr:latest"
+    ports:
+      - "8000:8000"
