@@ -14,12 +14,13 @@ var xrmap = {
   'present-participle': 'Présent',
   'past-participle': 'Passé'
 }
+
 function xr(s) {
   return xrmap[s];
 }
 
 function gen_tense(tense_name, tense) {
-  var html = '<div class="w3-cell-row tense-wrapper">';
+  var html = '<div class="w3-container tense-wrapper">';
   html += '<div class="h-centered">' + xr(tense_name) + '</div>';
   $.each(tense, function(i, val) {
     html += val + '<br/>';
@@ -29,7 +30,7 @@ function gen_tense(tense_name, tense) {
 }
 
 function gen_mood(mood_name, mood) {
-  var html = '<div class="w3-cell-row mood-wrapper">';
+  var html = '<div class="w3-container mood-wrapper">';
   html += '<div class="h-centered"><h3>' + xr(mood_name) + '</h3></div>';
   $.each(mood, function(tense_name, tense) {
     html += gen_tense(tense_name, tense);
@@ -39,8 +40,9 @@ function gen_mood(mood_name, mood) {
 }
 
 function conjugate(verb) {
-  $.getJSON("http://localhost:8000/conjugate/" + verb, 
+  $.getJSON("/conjugate/" + verb, 
     function(data) {
+    $('#conjugation_div').html('');
     $.each(data['value']['moods'], function(mood_name, mood) {
       gen_mood(mood_name, mood);
     });

@@ -3,6 +3,7 @@ services:
   web:
     build: .
     volumes:
+      - ./conf.d:/etc/nginx/conf.d
       - ./html:/usr/share/nginx/html
     ports:
       - "80:80"
@@ -10,3 +11,5 @@ services:
     image: "verb_conjugate_fr:latest"
     ports:
       - "8000:8000"
+    expose:
+      - "8000"
