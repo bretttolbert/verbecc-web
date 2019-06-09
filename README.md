@@ -7,3 +7,8 @@
 https://gitlab.com/bretttolbert/verb-conjugate-fr
 
 [![pipeline status](https://gitlab.com/bretttolbert/verb-conjugate-fr/badges/master/pipeline.svg)](https://gitlab.com/bretttolbert/verb-conjugate-fr/pipelines)
+
+## Quick Start (Development)
+```
+docker-compose up
+```
