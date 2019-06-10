@@ -1,5 +1,5 @@
 var xrmap = {
-  'infinitive': 'INFINTIF',
+  'infinitive': 'INFINTIF3',
   'indicative': 'INDICATIF',
   'imperative': 'IMPÉRATIF',
   'conditional': 'CONDITIONNEL',
@@ -22,9 +22,9 @@ function xr(s) {
 function gen_tense(tense_name, tense) {
   var html = '<div class="w3-container tense-wrapper">';
   html += '<div class="h-centered">' + xr(tense_name) + '</div>';
-  $.each(tense, function(i, val) {
-    html += val + '<br/>';
-  });
+  for (var i=0; i<tense.length; ++i) {
+    html += tense[i] + '<br/>';
+  }
   html += '</div>';
   return html;
 }
@@ -32,9 +32,9 @@ function gen_tense(tense_name, tense) {
 function gen_mood(mood_name, mood) {
   var html = '<div class="w3-container mood-wrapper">';
   html += '<div class="h-centered"><h3>' + xr(mood_name) + '</h3></div>';
-  $.each(mood, function(tense_name, tense) {
-    html += gen_tense(tense_name, tense);
-  });
+  for ([key, value] of Object.entries(mood)) {
+    html += gen_tense(key, value);
+  }
   html += '</div>';
   $('#conjugation_div').append(html);
 }
@@ -43,9 +43,9 @@ function conjugate(verb) {
   $.getJSON("/conjugate/" + verb, 
     function(data) {
     $('#conjugation_div').html('');
-    $.each(data['value']['moods'], function(mood_name, mood) {
-      gen_mood(mood_name, mood);
-    });
+    for ([key, value] of Object.entries(data['value']['moods'])) {
+      gen_mood(key, value);
+    }
   })
   .fail(function(jqXHR, textStatus, errorThrown) {
     $('#conjugation_div').html(jqXHR.responseJSON.detail);
