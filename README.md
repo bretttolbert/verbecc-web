@@ -11,13 +11,11 @@ https://gitlab.com/bretttolbert/verb-conjugate-fr
 ## Live Demo
 http://142.93.74.193
 
-## Quick Start (Docker)
+## Quick Start
 ```
 $ docker login registry.gitlab.com
 $ docker pull registry.gitlab.com/bretttolbert/verb-conjugate-fr
-$ docker pull registry.gitlab.com/bretttolbert/verb-conjugate-fr-web
-```
-## Quick Start (Development)
-```
+$ git clone git@gitlab.com:bretttolbert/verb-conjugate-fr.git
+$ cd verb-conjugate-fr-web
 $ docker-compose up
 ```
