@@ -1,5 +1,5 @@
 var xrmap = {
-  'infinitive': 'INFINTIF3',
+  'infinitive': 'INFINTIF',
   'indicative': 'INDICATIF',
   'imperative': 'IMPÉRATIF',
   'conditional': 'CONDITIONNEL',
@@ -43,7 +43,9 @@ function conjugate(verb) {
   $.getJSON("/conjugate/" + verb, 
     function(data) {
     $('#conjugation_div').html('');
-    for ([key, value] of Object.entries(data['value']['moods'])) {
+    mood = data['value']['moods'];
+    entries = Object.entries(moods);
+    for ([key, value] of entries) {
       gen_mood(key, value);
     }
   })
