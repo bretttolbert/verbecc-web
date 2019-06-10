@@ -43,7 +43,7 @@ function conjugate(verb) {
   $.getJSON("/conjugate/" + verb, 
     function(data) {
     $('#conjugation_div').html('');
-    mood = data['value']['moods'];
+    moods = data['value']['moods'];
     entries = Object.entries(moods);
     for ([key, value] of entries) {
       gen_mood(key, value);
