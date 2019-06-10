@@ -14,8 +14,8 @@ http://142.93.74.193
 ## Quick Start (Docker)
 ```
 $ docker login registry.gitlab.com
-$ git pull registry.gitlab.com/bretttolbert/verb-conjugate-fr
-$ git pull registry.gitlab.com/bretttolbert/verb-conjugate-fr-web
+$ docker pull registry.gitlab.com/bretttolbert/verb-conjugate-fr
+$ docker pull registry.gitlab.com/bretttolbert/verb-conjugate-fr-web
 ```
 ## Quick Start (Development)
 ```
