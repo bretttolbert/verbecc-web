@@ -12,7 +12,8 @@ var xrmap = {
   'infinitive-present': 'Présent',
   'imperative-present': 'Présent',
   'present-participle': 'Présent',
-  'past-participle': 'Passé'
+  'past-participle': 'Passé',
+  'passé-composé': 'Passé composé'
 }
 
 function xr(s) {
