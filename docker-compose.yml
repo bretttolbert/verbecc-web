@@ -8,7 +8,7 @@ services:
     ports:
       - "80:80"
   verb_conjugate_fr:
-    image: "verb_conjugate_fr:latest"
+    image: "verb-conjugate-fr:latest"
     ports:
       - "8000:8000"
     expose:

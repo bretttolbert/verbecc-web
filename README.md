@@ -10,10 +10,11 @@ https://gitlab.com/bretttolbert/verb-conjugate-fr
 
 ## Quick Start (Docker)
 ```
-git pull registry.gitlab.com/bretttolbert/verb-conjugate-fr
-git pull registry.gitlab.com/bretttolbert/verb-conjugate-fr-web
+$ docker login registry.gitlab.com
+$ git pull registry.gitlab.com/bretttolbert/verb-conjugate-fr
+$ git pull registry.gitlab.com/bretttolbert/verb-conjugate-fr-web
 ```
 ## Quick Start (Development)
 ```
-docker-compose up
+$ docker-compose up
 ```
