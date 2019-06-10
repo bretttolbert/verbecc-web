@@ -72,7 +72,7 @@ $(function() {
         response(data.value);
       });
     },
-    minLength : 3,
+    minLength : 1,
     select: function(event, ui) {
       conjugate(ui.item.value);
     }
