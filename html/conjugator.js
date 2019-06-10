@@ -42,7 +42,7 @@ function gen_mood(mood_name, mood) {
 }
 
 function conjugate(verb) {
-  $.getJSON("/conjugate/" + verb, 
+  $.getJSON("/vcfr/conjugate/" + verb, 
     function(data) {
     $('#conjugation_div').html('');
     var moods = data['value']['moods'];
@@ -63,5 +63,18 @@ $(function() {
   });
   $('#verb_input').change(function() {
     conjugate($(this).val());
-  })
+  });
+  $("#verb_input").autocomplete({
+    source : function(request, response) {
+      var query = $("#verb_input").val();
+      jQuery.get("/vcfr/search/infinitive/" + query, 
+        function(data) {
+        response(data.value);
+      });
+    },
+    minLength : 3,
+    select: function(event, ui) {
+      conjugate(ui.item.value);
+    }
+  });
 });
