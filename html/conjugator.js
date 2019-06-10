@@ -32,8 +32,10 @@ function gen_tense(tense_name, tense) {
 function gen_mood(mood_name, mood) {
   var html = '<div class="w3-container mood-wrapper">';
   html += '<div class="h-centered"><h3>' + xr(mood_name) + '</h3></div>';
-  for ([key, value] of Object.entries(mood)) {
-    html += gen_tense(key, value);
+  for (var key in mood) {
+    if (mood.hasOwnProperty(key)) {
+      html += gen_tense(key, mood[key]);
+    }
   }
   html += '</div>';
   $('#conjugation_div').append(html);
@@ -43,10 +45,11 @@ function conjugate(verb) {
   $.getJSON("/conjugate/" + verb, 
     function(data) {
     $('#conjugation_div').html('');
-    moods = data['value']['moods'];
-    entries = Object.entries(moods);
-    for ([key, value] of entries) {
-      gen_mood(key, value);
+    var moods = data['value']['moods'];
+    for (var key in moods) {
+      if (moods.hasOwnProperty(key)) {
+        gen_mood(key, moods[key]);
+      }
     }
   })
   .fail(function(jqXHR, textStatus, errorThrown) {
