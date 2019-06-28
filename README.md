@@ -13,9 +13,8 @@ http://verbe.cc
 
 ## Quick Start
 ```
-$ docker login registry.gitlab.com
-$ docker pull registry.gitlab.com/bretttolbert/verb-conjugate-fr
-$ git clone git@gitlab.com:bretttolbert/verb-conjugate-fr.git
+$ docker pull bretttolbert/verb-conjugate-fr:latest
+$ git clone git@gitlab.com:bretttolbert/verb-conjugate-fr-web.git
 $ cd verb-conjugate-fr-web
 $ docker-compose up
 ```
