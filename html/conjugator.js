@@ -6,6 +6,7 @@ var xrmap = {
   'subjunctive': 'SUBJONCTIF',
   'participle': 'PARTICIPE',
   'present': 'Présent',
+  'past': 'Passé',
   'imperfect': 'Imparfait',
   'future': 'Futur',
   'simple-past': 'Passé simple',
