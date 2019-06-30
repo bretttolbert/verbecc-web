@@ -14,7 +14,8 @@ var xrmap = {
   'imperative-present': 'Présent',
   'present-participle': 'Présent',
   'past-participle': 'Passé',
-  'passé-composé': 'Passé composé'
+  'passé-composé': 'Passé composé',
+  'pluperfect': 'Plus-que-parfait'
 }
 
 function xr(s) {
