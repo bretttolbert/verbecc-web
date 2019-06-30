@@ -11,6 +11,7 @@ var xrmap = {
   'future': 'Futur simple',
   'future-perfect': 'Futur antérieur',
   'simple-past': 'Passé simple',
+  'anterior-past': 'Passé antérieur',
   'infinitive-present': 'Présent',
   'imperative-present': 'Présent',
   'present-participle': 'Présent',
