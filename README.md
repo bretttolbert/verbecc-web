@@ -86,7 +86,7 @@ http://verbe.cc/vcfr/conjugate/manger
 +------------------------------------------------------+                                                                               
 ```   
 
-# verbecc-svc
+# verbecc-web
 
 #### Quick Start
 ```
