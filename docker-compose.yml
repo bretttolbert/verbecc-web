@@ -7,7 +7,7 @@ services:
       - ./html:/usr/share/nginx/html
     ports:
       - "80:80"
-  verb_conjugate_fr:
+  verbecc_svc:
     image: "bretttolbert/verbecc-svc:latest"
     ports:
       - "8000:8000"
