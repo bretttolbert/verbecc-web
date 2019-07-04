@@ -1,20 +1,26 @@
-# verb-conjugate-fr
+# verbecc
 
-### Web interface for verb-conjugate-fr
+### Verbes, complètement conjugués - conjugueur français
 
-### Un interface web pour verb-conjugate-fr
+### Verbs, completely conjugated - French conjugator
 
-https://gitlab.com/bretttolbert/verb-conjugate-fr
+# verbecc-web
 
-[![pipeline status](https://gitlab.com/bretttolbert/verb-conjugate-fr/badges/master/pipeline.svg)](https://gitlab.com/bretttolbert/verb-conjugate-fr/pipelines)
+### Web front-end for verbecc-svc
+
+### Une interface web pour verbecc-svc
+
+See https://github.com/bretttolbert/verbecc-svc
+
+[![pipeline status](https://gitlab.com/bretttolbert/verbecc-svc/badges/master/pipeline.svg)](https://gitlab.com/bretttolbert/verbecc-svc/pipelines)
 
 ## See it live
 http://verbe.cc
 
 ## Quick Start
 ```
-$ docker pull bretttolbert/verb-conjugate-fr:latest
-$ git clone git@gitlab.com:bretttolbert/verb-conjugate-fr-web.git
-$ cd verb-conjugate-fr-web
+$ docker pull bretttolbert/verbecc-svc:latest
+$ git clone git@gitlab.com:bretttolbert/verbecc-web.git
+$ cd verbecc-web
 $ docker-compose up
 ```
