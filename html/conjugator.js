@@ -1,33 +1,27 @@
 var xrmap = {
-  'infinitive': 'INFINTIF',
-  'indicative': 'INDICATIF',
-  'imperative': 'IMPÉRATIF',
-  'conditional': 'CONDITIONNEL',
-  'subjunctive': 'SUBJONCTIF',
-  'participle': 'PARTICIPE',
-  'present': 'Présent',
-  'past': 'Passé',
-  'imperfect': 'Imparfait',
-  'future': 'Futur simple',
-  'future-perfect': 'Futur antérieur',
-  'simple-past': 'Passé simple',
-  'anterior-past': 'Passé antérieur',
-  'infinitive-present': 'Présent',
-  'imperative-present': 'Présent',
-  'imperative-past': 'Passé',
-  'present-participle': 'Présent',
-  'past-participle': 'Passé',
-  'passé-composé': 'Passé composé',
-  'pluperfect': 'Plus-que-parfait'
+  'plus que parfait': 'plus-que-parfait'
+}
+
+function replacesDashes(s) {
+  return s.replace(/-/g, ' ');
 }
 
 function xr(s) {
-  return xrmap[s];
+  s = replacesDashes(s);
+  if (xrmap.hasOwnProperty(s)) {
+    return xrmap[s];
+  } else {
+    return s;
+  }
+}
+
+function capitalize(s) {
+    return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
 function gen_tense(tense_name, tense) {
   var html = '<div class="w3-container tense-wrapper">';
-  html += '<div class="h-centered">' + xr(tense_name) + '</div>';
+  html += '<div class="h-centered">' + capitalize(xr(tense_name)) + '</div>';
   for (var i=0; i<tense.length; ++i) {
     html += tense[i] + '<br/>';
   }
@@ -37,7 +31,8 @@ function gen_tense(tense_name, tense) {
 
 function gen_mood(mood_name, mood) {
   var html = '<div class="w3-container mood-wrapper">';
-  html += '<div class="h-centered"><h3>' + xr(mood_name) + '</h3></div>';
+  html += '<div class="h-centered"><h3>' + 
+    xr(mood_name).toUpperCase() + '</h3></div>';
   for (var key in mood) {
     if (mood.hasOwnProperty(key)) {
       html += gen_tense(key, mood[key]);
