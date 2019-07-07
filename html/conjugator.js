@@ -1,3 +1,5 @@
+var lang = 'fr';
+
 var xrmap = {
   'plus que parfait': 'plus-que-parfait'
 }
@@ -43,7 +45,7 @@ function gen_mood(mood_name, mood) {
 }
 
 function conjugate(verb) {
-  $.getJSON("/vcfr/conjugate/" + verb, 
+  $.getJSON("/vcfr/conjugate/" + lang + "/" + verb, 
     function(data) {
     $('#conjugation_div').html('');
     var moods = data['value']['moods'];
@@ -58,7 +60,24 @@ function conjugate(verb) {
   })
 }
 
+function init_lang_select() {
+  $.getJSON("/vcfr/supported-langs", function(data) {
+    html = '<select id="lang_select">';
+    $.each(data['value'], function(idx,val) {
+      html += '<option value="'+ val + '">'+ val + '</option>';
+    });
+    html += '</select>';
+    $('#lang_select_div').html(html);
+    $('#lang_select').on('change', function() {
+      lang = this.value;
+      $('#conjugation_div').html('');
+      $('#verb_input').val('');
+    });
+  });
+}
+
 $(function() {
+  init_lang_select();
   $('#conjugate_btn').click(function() {
     conjugate($('#verb_input').val());
   });
@@ -68,7 +87,7 @@ $(function() {
   $("#verb_input").autocomplete({
     source : function(request, response) {
       var query = $("#verb_input").val();
-      jQuery.get("/vcfr/search/infinitive/" + query, 
+      jQuery.get("/vcfr/search/infinitive/" + lang + "/" + query, 
         function(data) {
         response(data.value);
       });
