@@ -69,7 +69,7 @@ function init_lang_select() {
     html += '</select>';
     $('#lang_select_div').html(html);
     $('#lang_select').on('change', function() {
-      lang = this.value;
+      lang = $(this).val();
       var title = 'La conjugaison des verbes francais';
       var credits = 'Réalisé avec ';
       var conjugate = 'Conjuguer';
