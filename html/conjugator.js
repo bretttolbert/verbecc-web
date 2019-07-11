@@ -63,13 +63,24 @@ function conjugate(verb) {
 function init_lang_select() {
   $.getJSON("/vcfr/supported-langs", function(data) {
     html = '<select id="lang_select">';
-    $.each(data['value'], function(idx,val) {
-      html += '<option value="'+ val + '">'+ val + '</option>';
+    $.each(data['value'], function(key,val) {
+      html += '<option value="'+ key + '">'+ val + '</option>';
     });
     html += '</select>';
     $('#lang_select_div').html(html);
     $('#lang_select').on('change', function() {
       lang = this.value;
+      var title = 'La conjugaison des verbes francais';
+      var credits = 'Réalisé avec ';
+      var conjugate = 'Conjuguer';
+      if (lang == 'es') {
+        title = 'La conjugación de los verbos españoles';
+        credits = 'Hecho con ';
+        conjugate = 'Conjugado';
+      }
+      document.title = title;
+      $('#credits_span').text(credits);
+      $('#conjugate_btn').val(conjugate)
       $('#conjugation_div').html('');
       $('#verb_input').val('');
     });
