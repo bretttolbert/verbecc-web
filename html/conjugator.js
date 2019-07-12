@@ -70,11 +70,11 @@ function init_lang_select() {
     $('#lang_select_div').html(html);
     $('#lang_select').on('change', function() {
       lang = $(this).val();
-      var title = 'La conjugaison des verbes francais';
-      var credits = 'Réalisé avec ';
+      var title = 'La conjugaison des verbes fran\u00e7ais';
+      var credits = 'R\u00e9alis\u00e9 avec ';
       var conjugate = 'Conjuguer';
       if (lang == 'es') {
-        title = 'La conjugación de los verbos españoles';
+        title = 'La conjugaci\u00f3n de los verbos espa\u00f1oles';
         credits = 'Hecho con ';
         conjugate = 'Conjugado';
       }
