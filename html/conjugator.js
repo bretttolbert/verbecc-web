@@ -48,6 +48,9 @@ function conjugate(verb) {
   $.getJSON("/vcfr/conjugate/" + lang + "/" + verb, 
     function(data) {
     $('#conjugation_div').html('');
+    if (data['value']['verb']['predicted']) {
+      $('#conjugation_div').append('Unknown verb. Predicted conjugation: <br/>');
+    }
     var moods = data['value']['moods'];
     for (var key in moods) {
       if (moods.hasOwnProperty(key)) {
