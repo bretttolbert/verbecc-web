@@ -11,11 +11,10 @@ function replacesDashes(s) {
 
 function xr(s) {
   s = replacesDashes(s);
-  if (xrmap.hasOwnProperty(s)) {
-    return xrmap[s];
-  } else {
-    return s;
-  }
+  $.each(xrmap, function(k,v) {
+    s = s.replace(k, v);
+  });
+  return s;
 }
 
 function capitalize(s) {
@@ -67,8 +66,8 @@ function conjugate(verb) {
 function init_lang_select() {
   $.getJSON("/vcfr/supported-langs", function(data) {
     html = '<select id="lang_select">';
-    $.each(data['value'], function(key,val) {
-      html += '<option value="'+ key + '">'+ val + '</option>';
+    $.each(data['value'], function(k,v) {
+      html += '<option value="'+ k + '">'+ v + '</option>';
     });
     html += '</select>';
     $('#lang_select_div').html(html);
