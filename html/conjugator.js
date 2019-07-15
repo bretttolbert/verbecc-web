@@ -1,7 +1,8 @@
 var lang = 'fr';
 
 var xrmap = {
-  'plus que parfait': 'plus-que-parfait'
+  'plus que parfait': 'plus-que-parfait',
+  'mais que perfeito': 'mais-que-perfeito'
 }
 
 function replacesDashes(s) {
