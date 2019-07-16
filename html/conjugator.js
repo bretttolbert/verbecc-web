@@ -11,7 +11,7 @@ function replacesDashes(s) {
 
 function xr(s) {
   s = replacesDashes(s);
-  $.each(xrmap, function(k,v) {
+  $.each(xrmap, function(k, v) {
     s = s.replace(k, v);
   });
   return s;
@@ -24,9 +24,9 @@ function capitalize(s) {
 function gen_tense(tense_name, tense) {
   var html = '<div class="w3-container tense-wrapper">';
   html += '<div class="h-centered">' + capitalize(xr(tense_name)) + '</div>';
-  for (var i=0; i<tense.length; ++i) {
+  $.each(tense, function(i) {
     html += tense[i] + '<br/>';
-  }
+  });
   html += '</div>';
   return html;
 }
@@ -35,11 +35,9 @@ function gen_mood(mood_name, mood) {
   var html = '<div class="w3-container mood-wrapper">';
   html += '<div class="h-centered"><h3>' + 
     xr(mood_name).toUpperCase() + '</h3></div>';
-  for (var key in mood) {
-    if (mood.hasOwnProperty(key)) {
-      html += gen_tense(key, mood[key]);
-    }
-  }
+  $.each(mood, function(k, v) {
+    html += gen_tense(k, v);
+  });
   html += '</div>';
   $('#conjugation_div').append(html);
 }
@@ -52,11 +50,9 @@ function conjugate(verb) {
       $('#conjugation_div').append('Unknown verb. Predicted conjugation: <br/>');
     }
     var moods = data['value']['moods'];
-    for (var key in moods) {
-      if (moods.hasOwnProperty(key)) {
-        gen_mood(key, moods[key]);
-      }
-    }
+    $.each(moods, function(k, v) {
+      gen_mood(k, v);
+    });
   })
   .fail(function(jqXHR, textStatus, errorThrown) {
     $('#conjugation_div').html(jqXHR.responseJSON.detail);
@@ -66,7 +62,7 @@ function conjugate(verb) {
 function init_lang_select() {
   $.getJSON("/vcfr/supported-langs", function(data) {
     html = '<select id="lang_select">';
-    $.each(data['value'], function(k,v) {
+    $.each(data['value'], function(k, v) {
       html += '<option value="'+ k + '">'+ v + '</option>';
     });
     html += '</select>';
