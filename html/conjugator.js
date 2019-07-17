@@ -73,9 +73,14 @@ function init_lang_select() {
       var credits = 'R\u00e9alis\u00e9 avec ';
       var conjugate = 'Conjuguer';
       if (lang == 'es') {
-        title = 'La conjugaci\u00f3n de los verbos espa\u00f1oles';
+        title = 'La conjugaci\u00f3n de verbos en espa\u00f1ol';
         credits = 'Hecho con ';
         conjugate = 'Conjugado';
+      }
+      else if (lang == 'pt') {
+        title = 'Conjuga\u00e7\u00e3o de verbos em portugu\u00eas';
+        credits = 'Feito com ';
+        conjugate = 'Conjugar';
       }
       document.title = title;
       $('#credits_span').text(credits);
