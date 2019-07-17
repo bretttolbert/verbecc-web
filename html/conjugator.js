@@ -75,7 +75,7 @@ function init_lang_select() {
       if (lang == 'es') {
         title = 'La conjugaci\u00f3n de verbos en espa\u00f1ol';
         credits = 'Hecho con ';
-        conjugate = 'Conjugado';
+        conjugate = 'Conjugar';
       }
       else if (lang == 'pt') {
         title = 'Conjuga\u00e7\u00e3o de verbos em portugu\u00eas';
