@@ -77,6 +77,11 @@ function init_lang_select() {
         credits = 'Hecho con ';
         conjugate = 'Conjugar';
       }
+      else if (lang == 'it') {
+        title = 'Coniugazione di verbi italiani';
+        credits = 'Fatto con ';
+        conjugate = 'Coniugare';
+      }
       else if (lang == 'pt') {
         title = 'Conjuga\u00e7\u00e3o de verbos em portugu\u00eas';
         credits = 'Feito com ';
