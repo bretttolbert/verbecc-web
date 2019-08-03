@@ -69,6 +69,7 @@ function init_lang_select() {
     $('#lang_select_div').html(html);
     $('#lang_select').on('change', function() {
       lang = $(this).val();
+      //default: french
       var title = 'La conjugaison des verbes fran\u00e7ais';
       var credits = 'R\u00e9alis\u00e9 avec ';
       var conjugate = 'Conjuguer';
@@ -86,6 +87,11 @@ function init_lang_select() {
         title = 'Conjuga\u00e7\u00e3o de verbos em portugu\u00eas';
         credits = 'Feito com ';
         conjugate = 'Conjugar';
+      } 
+      else if (lang == 'ro') {
+        title = 'Conjugarea verbelor rom\u00e2ne\u0218ti'
+        credits = 'Facut cu ';
+        conjugate = 'Conjuga';
       }
       document.title = title;
       $('#credits_span').text(credits);
