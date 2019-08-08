@@ -89,7 +89,7 @@ function init_lang_select() {
         conjugate = 'Conjugar';
       } 
       else if (lang == 'ro') {
-        title = 'Conjugarea verbelor rom\u00e2ne\u0218ti'
+        title = 'Conjugarea verbelor rom\u00e2ne\u0219ti'
         credits = 'Facut cu ';
         conjugate = 'Conjuga';
       }
