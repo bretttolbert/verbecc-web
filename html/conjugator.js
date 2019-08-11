@@ -1,4 +1,37 @@
-var lang = 'fr';
+var _lang = 'fr';
+
+function set_lang(lang) {
+  _lang = lang;
+  //default: french
+  var title = 'La conjugaison des verbes fran\u00e7ais';
+  var credits = 'R\u00e9alis\u00e9 avec ';
+  var conjugate = 'Conjuguer';
+  if (lang == 'es') {
+    title = 'La conjugaci\u00f3n de verbos en espa\u00f1ol';
+    credits = 'Hecho con ';
+    conjugate = 'Conjugar';
+  }
+  else if (lang == 'it') {
+    title = 'Coniugazione di verbi italiani';
+    credits = 'Fatto con ';
+    conjugate = 'Coniugare';
+  }
+  else if (lang == 'pt') {
+    title = 'Conjuga\u00e7\u00e3o de verbos em portugu\u00eas';
+    credits = 'Feito com ';
+    conjugate = 'Conjugar';
+  } 
+  else if (lang == 'ro') {
+    title = 'Conjugarea verbelor rom\u00e2ne\u0219ti'
+    credits = 'Facut cu ';
+    conjugate = 'Conjuga';
+  }
+  document.title = title;
+  $('#credits_span').text(credits);
+  $('#conjugate_btn').val(conjugate)
+  $('#conjugation_div').html('');
+  $('#verb_input').val('');
+}
 
 var xrmap = {
   'plus que parfait': 'plus-que-parfait',
@@ -43,7 +76,7 @@ function gen_mood(mood_name, mood) {
 }
 
 function conjugate(verb) {
-  $.getJSON("/vcfr/conjugate/" + lang + "/" + verb, 
+  $.getJSON("/vcfr/conjugate/" + _lang + "/" + verb, 
     function(data) {
     $('#conjugation_div').html('');
     if (data['value']['verb']['predicted']) {
@@ -67,42 +100,17 @@ function init_lang_select() {
     });
     html += '</select>';
     $('#lang_select_div').html(html);
+    $('#lang_select_div option[value=' + _lang + ']').attr('selected','selected');
     $('#lang_select').on('change', function() {
-      lang = $(this).val();
-      //default: french
-      var title = 'La conjugaison des verbes fran\u00e7ais';
-      var credits = 'R\u00e9alis\u00e9 avec ';
-      var conjugate = 'Conjuguer';
-      if (lang == 'es') {
-        title = 'La conjugaci\u00f3n de verbos en espa\u00f1ol';
-        credits = 'Hecho con ';
-        conjugate = 'Conjugar';
-      }
-      else if (lang == 'it') {
-        title = 'Coniugazione di verbi italiani';
-        credits = 'Fatto con ';
-        conjugate = 'Coniugare';
-      }
-      else if (lang == 'pt') {
-        title = 'Conjuga\u00e7\u00e3o de verbos em portugu\u00eas';
-        credits = 'Feito com ';
-        conjugate = 'Conjugar';
-      } 
-      else if (lang == 'ro') {
-        title = 'Conjugarea verbelor rom\u00e2ne\u0219ti'
-        credits = 'Facut cu ';
-        conjugate = 'Conjuga';
-      }
-      document.title = title;
-      $('#credits_span').text(credits);
-      $('#conjugate_btn').val(conjugate)
-      $('#conjugation_div').html('');
-      $('#verb_input').val('');
+      set_lang($(this).val());
     });
   });
 }
 
 $(function() {
+  var url = new URL(window.location);
+  var params = new URLSearchParams(url.search);
+  set_lang(params.get('lang'));
   init_lang_select();
   $('#conjugate_btn').click(function() {
     conjugate($('#verb_input').val());
@@ -113,7 +121,7 @@ $(function() {
   $("#verb_input").autocomplete({
     source : function(request, response) {
       var query = $("#verb_input").val();
-      jQuery.get("/vcfr/search/infinitive/" + lang + "/" + query, 
+      jQuery.get("/vcfr/search/infinitive/" + _lang + "/" + query, 
         function(data) {
         response(data.value);
       });

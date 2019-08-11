@@ -1,12 +1,5 @@
 version: '2'
 services:
-  web:
-    build: .
-    volumes:
-      - ./conf.d:/etc/nginx/conf.d
-      - ./html:/usr/share/nginx/html
-    ports:
-      - "80:80"
   verbecc_svc:
     image: "bretttolbert/verbecc-svc:latest"
     ports:
@@ -14,3 +7,10 @@ services:
     expose:
       - "8000"
     restart: always
+  web:
+    build: .
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d
+      - ./html:/usr/share/nginx/html
+    ports:
+      - "80:80"
