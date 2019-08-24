@@ -110,7 +110,10 @@ function init_lang_select() {
 $(function() {
   var url = new URL(window.location);
   var params = new URLSearchParams(url.search);
-  set_lang(params.get('lang'));
+  if (params.get('lang') != null) {
+    _lang = params.get('lang');
+  }
+  set_lang(_lang);
   init_lang_select();
   $('#conjugate_btn').click(function() {
     conjugate($('#verb_input').val());
