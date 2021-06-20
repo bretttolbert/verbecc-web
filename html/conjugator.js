@@ -115,6 +115,20 @@ function init_lang_select() {
   });
 }
 
+/**
+ * Hide mobile keyboard
+ */
+function hideKeyboard(element) {
+    element.attr('readonly', 'readonly'); // Force keyboard to hide on input field.
+    element.attr('disabled', 'true'); // Force keyboard to hide on textarea field.
+    setTimeout(function() {
+        element.blur();  //actually close the keyboard
+        // Remove readonly attribute after keyboard is hidden.
+        element.removeAttr('readonly');
+        element.removeAttr('disabled');
+    }, 100);
+}
+
 $(function() {
   var url = new URL(window.location);
   var params = new URLSearchParams(url.search);
@@ -128,6 +142,7 @@ $(function() {
   });
   $('#verb_input').change(function() {
     conjugate($(this).val());
+    hideKeyboard($(this));
   });
   $("#verb_input").autocomplete({
     source : function(request, response) {
