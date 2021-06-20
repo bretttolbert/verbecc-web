@@ -56,7 +56,7 @@ function capitalize(s) {
 
 function gen_tense(verb_data, tense_name, tense) {
   var html = '<div class="w3-container tense-wrapper">';
-  html += '<div class="h-centered">' + capitalize(xr(tense_name)) + '</div>';
+  html += '<div class="tense-label">' + capitalize(xr(tense_name)) + '</div>';
   var stem = verb_data['stem']; //e.g. 'parl'
   $.each(tense, function(i) {
     t = tense[i]
@@ -72,7 +72,7 @@ function gen_tense(verb_data, tense_name, tense) {
 
 function gen_mood(verb_data, mood_name, mood) {
   var html = '<div class="w3-container mood-wrapper">';
-  html += '<div class="h-centered"><h3>' + 
+  html += '<div class="mood-label"><h3>' + 
     xr(mood_name).toUpperCase() + '</h3></div>';
   $.each(mood, function(k, v) {
     html += gen_tense(verb_data, k, v);

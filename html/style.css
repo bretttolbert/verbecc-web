@@ -1,14 +1,18 @@
 #input_div {
   margin-top: 10px;
+  text-align: center;
+}
+#footer_div {
+  text-align: center;
 }
 .outer-wrapper {
-  border: #a2b3d4 1px solid;
+  border: 0;
   margin: 10px;
   -webkit-border-radius: 4px;
   border-radius: 4px;
 } 
 .mood-wrapper {
-  border: 0;
+  border: #a2b3d4 1px solid;
   margin: 10px;
   -webkit-border-radius: 4px;
   border-radius: 4px;
@@ -19,11 +23,16 @@
   -webkit-border-radius: 4px;
   border-radius: 4px;
 }
+.mood-label {
+  text-align: left;
+}
+.tense-label {
+  text-align: left;
+  font-weight: bold;
+}
 .ending {
   color: #cc3333;
-}
-.h-centered {
-  text-align: center;
+  font-weight: bold;
 }
 .ui-autocomplete-loading {
   background: white url("images/ui-anim_basic_16x16.gif") right center no-repeat;
