@@ -54,22 +54,28 @@ function capitalize(s) {
     return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-function gen_tense(tense_name, tense) {
+function gen_tense(verb_data, tense_name, tense) {
   var html = '<div class="w3-container tense-wrapper">';
   html += '<div class="h-centered">' + capitalize(xr(tense_name)) + '</div>';
+  var stem = verb_data['stem']; //e.g. 'parl'
   $.each(tense, function(i) {
-    html += tense[i] + '<br/>';
+    t = tense[i]
+    var stem_idx = t.lastIndexOf(stem)
+    var beginning = t.substring(0, stem_idx + stem.length); //e.g. 'je parl'
+    var ending = t.substring(stem_idx + stem.length);
+    html += beginning + 
+      "<span class=\"ending\">" + ending + '</span><br/>';
   });
   html += '</div>';
   return html;
 }
 
-function gen_mood(mood_name, mood) {
+function gen_mood(verb_data, mood_name, mood) {
   var html = '<div class="w3-container mood-wrapper">';
   html += '<div class="h-centered"><h3>' + 
     xr(mood_name).toUpperCase() + '</h3></div>';
   $.each(mood, function(k, v) {
-    html += gen_tense(k, v);
+    html += gen_tense(verb_data, k, v);
   });
   html += '</div>';
   $('#conjugation_div').append(html);
@@ -78,14 +84,15 @@ function gen_mood(mood_name, mood) {
 function conjugate(verb) {
   $.getJSON("/vcfr/conjugate/" + _lang + "/" + verb, 
     function(data) {
-    $('#conjugation_div').html('');
-    if (data['value']['verb']['predicted']) {
-      $('#conjugation_div').append('Unknown verb. Predicted conjugation: <br/>');
-    }
-    var moods = data['value']['moods'];
-    $.each(moods, function(k, v) {
-      gen_mood(k, v);
-    });
+      $('#conjugation_div').html('');
+      var verb_data = data['value']['verb'];
+      if (verb_data['predicted']) {
+        $('#conjugation_div').append('Unknown verb. Predicted conjugation: <br/>');
+      }
+      var moods = data['value']['moods'];
+      $.each(moods, function(k, v) {
+        gen_mood(verb_data, k, v);
+      });
   })
   .fail(function(jqXHR, textStatus, errorThrown) {
     $('#conjugation_div').html(jqXHR.responseJSON.detail);
