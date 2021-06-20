@@ -27,6 +27,7 @@ function set_lang(lang) {
     conjugate = 'Conjuga';
   }
   document.title = title;
+  $("html").attr("lang", lang);
   $('#credits_span').text(credits);
   $('#conjugate_btn').val(conjugate)
   $('#conjugation_div').html('');
