@@ -1,16 +1,18 @@
-version: '2'
+version: '3'
 services:
-  verbecc_svc:
+
+  verbecc-svc:
     image: "bretttolbert/verbecc-svc:latest"
+    container_name: verbecc-svc
+    environment:
+      - foo=bar
     ports:
-      - "8000:8000"
-    expose:
-      - "8000"
-    restart: always
-  web:
-    build: .
-    volumes:
-      - ./conf.d:/etc/nginx/conf.d
-      - ./html:/usr/share/nginx/html
+      - 8000:8000
+
+  verbecc-ui:
+    build: ./verbecc-ui
+    container_name: verbecc-ui
     ports:
-      - "80:80"
+      - 80:80
+    links:
+      - verbecc-svc

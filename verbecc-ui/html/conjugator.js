@@ -1,4 +1,5 @@
 var _lang = 'fr';
+API_BASE_PATH = '/verbecc';
 
 function set_lang(lang) {
   _lang = lang;
@@ -83,7 +84,7 @@ function gen_mood(verb_data, mood_name, mood) {
 }
 
 function conjugate(verb) {
-  $.getJSON("/vcfr/conjugate/" + _lang + "/" + verb, 
+  $.getJSON(API_BASE_PATH + "/conjugate/" + _lang + "/" + verb, 
     function(data) {
       $('#conjugation_div').html('');
       var verb_data = data['value']['verb'];
@@ -96,12 +97,17 @@ function conjugate(verb) {
       });
   })
   .fail(function(jqXHR, textStatus, errorThrown) {
-    $('#conjugation_div').html(jqXHR.responseJSON.detail);
+    try {
+      $('#conjugation_div').html(jqXHR.responseJSON.detail);
+    }
+    catch (err) {
+      $('#conjugation_div').html("Failed to load conjugation");
+    }
   })
 }
 
 function init_lang_select() {
-  $.getJSON("/vcfr/supported-langs", function(data) {
+  $.getJSON(API_BASE_PATH + "/supported-langs", function(data) {
     html = '<select id="lang_select">';
     $.each(data['value'], function(k, v) {
       html += '<option value="'+ k + '">'+ v + '</option>';
@@ -147,7 +153,7 @@ $(function() {
   $("#verb_input").autocomplete({
     source : function(request, response) {
       var query = $("#verb_input").val();
-      jQuery.get("/vcfr/search/infinitive/" + _lang + "/" + query, 
+      jQuery.get(API_BASE_PATH + "/search/infinitive/" + _lang + "/" + query, 
         function(data) {
         response(data.value);
       });
