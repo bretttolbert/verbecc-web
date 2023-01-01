@@ -1,4 +1,4 @@
-version: '3'
+version: '3.9'
 services:
 
   verbecc-svc:
@@ -6,8 +6,8 @@ services:
     container_name: verbecc-svc
     environment:
       - foo=bar
-    ports:
-      - 8000:8000
+    expose:
+      - "8000"
 
   verbecc-ui:
     build: ./verbecc-ui
@@ -15,6 +15,4 @@ services:
     depends_on:
       - verbecc-svc
     ports:
-      - 80:80
-    links:
-      - verbecc-svc
+      - "80:80"
