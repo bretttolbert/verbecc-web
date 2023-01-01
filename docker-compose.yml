@@ -12,6 +12,8 @@ services:
   verbecc-ui:
     build: ./verbecc-ui
     container_name: verbecc-ui
+    depends_on:
+      - verbecc-svc
     ports:
       - 80:80
     links:
