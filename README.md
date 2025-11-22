@@ -11,7 +11,6 @@
 - Implemented entirely in Javascript (JQuery) - conjugations are generated without reloading the page
 - Dependencies: [verbecc-svc](https://github.com/bretttolbert/verbecc-svc)
 
-# verbecc-web
 
 #### Quick Start
 ```bash
