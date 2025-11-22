@@ -7,6 +7,8 @@ services:
       - foo=bar
     expose:
       - "8000"
+    networks:
+      - verbecc-proxy-network
 
   verbecc-ui:
     build: ./verbecc-ui
@@ -15,3 +17,9 @@ services:
       - verbecc-svc
     ports:
       - "80:80"
+    networks:
+      - verbecc-proxy-network
+
+networks:
+  verbecc-proxy-network:
+    driver: bridge
