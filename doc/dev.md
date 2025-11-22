@@ -33,8 +33,10 @@ docker tag bretttolbert/verbecc-ui:latest bretttolbert/verbecc-ui:2.0.0
 ```
 
 ### Run verbecc-ui docker (without docker-compose), with verbecc-proxy-network
+- Using volume map to allow editing of source HTML/JS without rebuilding `verbecc-ui` Docker image.
+- However for changes to take effect you may need to clear your browser cache and/or bump the rev parameter of the JS include (see `<script type="text/javascript" src="conjugator.js?rev=26"` in `index.html`)
 ```bash
-docker run -it --network verbecc-proxy-network -p 80:80 --name verbecc-ui -v $(pwd):/code/verbecc_ui bretttolbert/verbecc-ui:2.0.0 /bin/bash
+docker run -it --network verbecc-proxy-network -p 80:80 --name verbecc-ui -v $(pwd)/usr/share/nginx/html:/usr/share/nginx/html bretttolbert/verbecc-ui:2.0.0 /bin/bash
 ```
 
 ### Shell into running container, if you ran with -d (detached mode)
