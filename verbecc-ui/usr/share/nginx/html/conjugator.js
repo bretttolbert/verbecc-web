@@ -81,8 +81,27 @@ function gen_conjugation(verb_info, conjugation) {
     html += "<span>";
     // show pronoun in parens only if not in conjugation
     if ("pr" in conjugation) {
-        if (!c.startsWith(conjugation["pr"])) {
+        if (!beginning.startsWith(conjugation["pr"])) {
             html += "(" + conjugation["pr"] + ") ";
+        } else {
+            var conjugatedPronoun = conjugation["pr"];
+            // since pronoun is embedded in conjugation,
+            // we want to split it
+            // Why not just use conjugation["pr"]? Because
+            // the pronoun might get transformed e.g. "je" can become "j'"
+            // That's actually the only case I'm aware of though so
+            // it is easily handled.
+            if (beginning.startsWith("j'")) {
+                conjugatedPronoun = "j'";
+            }
+            var beginningWithoutPronoun = beginning.slice(conjugatedPronoun.length);
+            if (beginningWithoutPronoun.startsWith(" ")) {
+                beginningWithoutPronoun = beginningWithoutPronoun.slice(1)
+            }
+            beginning = beginningWithoutPronoun
+            //output the conjugated pronoun (not the original) to the first table cell
+            html += conjugatedPronoun
+            //the modified beginning will be output to the second cell below
         }
     }
     // show number only if pronoun not in conjugation
