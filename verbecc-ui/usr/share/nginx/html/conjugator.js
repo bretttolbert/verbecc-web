@@ -156,7 +156,7 @@ function extractPronounConjugation(s, pronoun) {
                 } 
             }
 
-            ret = s.slice(0, pronoun_idx + p.length);
+            return s.slice(0, pronoun_idx + p.length);
         }
     }
     return ret;
@@ -206,7 +206,8 @@ function gen_conjugation(verb_info, conjugation) {
             var stem_idx = c.lastIndexOf(stem);
             if (stem_idx != -1) {
                 ending = c.slice(stem_idx + stem.length);
-                stem = c.slice(0, stem_idx + stem.length).trim(); //include helping verb w/ stem
+                //include helping verb w/ stem
+                stem = c.slice(0, stem_idx + stem.length).trim();
             }
         }
     }
