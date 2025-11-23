@@ -116,6 +116,7 @@ langPronounsDict["ro"] = pronounListRo;
 // - "je me suis levée" -> "je me"
 // - "que nous nous levassions" -> "que nous nous" 
 // - "tu t'es levée" -> "tu t'"
+// - "él sea" -> "él"  (must not match "él se")
 function extractPronounConjugation(s, pronoun) {
     var ret = ""; //default is no pronoun
     var pronouns = langPronounsDict[_lang];
@@ -128,6 +129,11 @@ function extractPronounConjugation(s, pronoun) {
         }
         var pronoun_idx = s.lastIndexOf(p);
         if (pronoun_idx != -1) {
+            // "él sea" -> "él"  (must not match "él se")
+            // rule: if p ends with "e", subsequent char must be space
+            if (p.slice(-1) == "e" && s[pronoun_idx + p.length] != ' ') {
+                continue;
+            }
             //I want to avoid matching "on" in "levon" or "vous" in "levez-vous"
             //so ignore the match unless at start of string or preceded by space or apostrophe
             //e.g. in the case of "qu'il se"
