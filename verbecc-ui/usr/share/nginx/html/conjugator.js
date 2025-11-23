@@ -71,14 +71,28 @@ function gen_conjugation(verb_info, conjugation) {
             gender_class += "gender-feminine";
         }
     }
-    var html = "<tr class=\"conjugation" + gender_class + "\">";
-    html += "<td>";
-    html += "<span>";
     var c = conjugation["c"][0];
     var stem = verb_info['stem']; //e.g. 'parl'
     var stem_idx = c.lastIndexOf(stem)
     var beginning = c.substring(0, stem_idx + stem.length); //e.g. 'je parl'
     var ending = c.substring(stem_idx + stem.length);
+    var html = "<tr class=\"conjugation" + gender_class + "\">";
+    html += "<td>";
+    html += "<span>";
+    // show pronoun in parens only if not in conjugation
+    if ("pr" in conjugation) {
+        if (!c.startsWith(conjugation["pr"])) {
+            html += "(" + conjugation["pr"] + ") ";
+        }
+    }
+    // show number only if pronoun not in conjugation
+    else if ("n" in conjugation) {
+        html += "[" + conjugation["n"] + "] ";
+    }
+    html += "</span>";
+    html += "</td>";
+    html += "<td>";
+    html += "<span>";
     html += beginning + "<span class=\"ending\">" + ending + '</span>';
     html += "</span>";
     html += "</td>";
