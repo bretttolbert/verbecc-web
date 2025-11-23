@@ -12,6 +12,11 @@ function set_lang(lang) {
         credits = 'Hecho con ';
         conjugate = 'Conjugar';
     }
+    else if (lang == 'ca') {
+        title = 'Conjugaci\u00f3 verbal catalana'
+        credits = 'Fet amb ';
+        conjugate = 'Conjugat';
+    }
     else if (lang == 'it') {
         title = 'Coniugazione di verbi italiani';
         credits = 'Fatto con ';
@@ -57,24 +62,39 @@ function capitalize(s) {
 }
 
 function gen_conjugation(verb_info, conjugation) {
-    var html = "";
+    var gender_class = "";
+    if ("g" in conjugation) {
+        gender_class += " ";
+        if (conjugation["g"] == "m") {
+            gender_class += "gender-masculine";
+        } else {
+            gender_class += "gender-feminine";
+        }
+    }
+    var html = "<tr class=\"conjugation" + gender_class + "\">";
+    html += "<td>";
+    html += "<span>";
     var c = conjugation["c"][0];
     var stem = verb_info['stem']; //e.g. 'parl'
     var stem_idx = c.lastIndexOf(stem)
     var beginning = c.substring(0, stem_idx + stem.length); //e.g. 'je parl'
     var ending = c.substring(stem_idx + stem.length);
-    html += beginning +
-        "<span class=\"ending\">" + ending + '</span><br/>';
+    html += beginning + "<span class=\"ending\">" + ending + '</span>';
+    html += "</span>";
+    html += "</td>";
+    html += "</tr>";
     return html;
 }
 
 function gen_tense(verb_info, tense_name, tense_conjugation) {
     var html = '<div class="w3-container tense-wrapper">';
     html += '<div class="tense-label">' + capitalize(xr(tense_name)) + '</div>';
+    html += '<table>';
     $.each(tense_conjugation, function (i) {
         conjugation = tense_conjugation[i]
         html += gen_conjugation(verb_info, conjugation)
     });
+    html += '</table>';
     html += '</div>';
     return html;
 }
