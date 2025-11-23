@@ -61,6 +61,17 @@ function capitalize(s) {
     return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
+function getSpeciallyConjugatedPronoun(s) {
+    var speciallyConjugatedPronouns = ["j'"];
+    for (i in speciallyConjugatedPronouns) {
+        var p = speciallyConjugatedPronouns[i];
+        if (s.startsWith(p)) {
+            return p
+        }
+    }
+    return ""
+}
+
 function gen_conjugation(verb_info, conjugation) {
     var gender_class = "";
     if ("g" in conjugation) {
@@ -81,18 +92,21 @@ function gen_conjugation(verb_info, conjugation) {
     html += "<span>";
     // show pronoun in parens only if not in conjugation
     if ("pr" in conjugation) {
-        if (!beginning.startsWith(conjugation["pr"])) {
-            html += "(" + conjugation["pr"] + ") ";
+        pronoun = conjugation["pr"];
+        var speciallyConjugatedPronoun = getSpeciallyConjugatedPronoun(beginning);
+        var startsWithSpeciallyConjugatedPronoun = (speciallyConjugatedPronoun.length > 0);
+        if (!startsWithSpeciallyConjugatedPronoun && !beginning.startsWith(pronoun)) {
+            html += "(" + pronoun + ") ";
         } else {
-            var conjugatedPronoun = conjugation["pr"];
+            var conjugatedPronoun = pronoun;
             // since pronoun is embedded in conjugation,
             // we want to split it
             // Why not just use conjugation["pr"]? Because
             // the pronoun might get transformed e.g. "je" can become "j'"
             // That's actually the only case I'm aware of though so
             // it is easily handled.
-            if (beginning.startsWith("j'")) {
-                conjugatedPronoun = "j'";
+            if (startsWithSpeciallyConjugatedPronoun) {
+                conjugatedPronoun = speciallyConjugatedPronoun;
             }
             var beginningWithoutPronoun = beginning.slice(conjugatedPronoun.length);
             if (beginningWithoutPronoun.startsWith(" ")) {
