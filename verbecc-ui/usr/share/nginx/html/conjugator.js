@@ -118,6 +118,9 @@ langPronounsDict["ro"] = pronounListRo;
 // - "él sea" -> "él"  (must not match "él se")
 // - "che lui sia" -> "che lui" (must not match "lui si")
 // - "por sermos nós" -> "nós" 
+//
+// TODO: The current implementation is overly complex and will be 
+// replaced once aux verb stem is added to the verbecc conjugation data.
 function extractPronounConjugation(s, pronoun) {
     var ret = ""; //default is no pronoun
     var pronouns = langPronounsDict[_lang];
@@ -172,46 +175,54 @@ function gen_conjugation(verb_info, conjugation) {
             gender_class += "gender-feminine";
         }
     }
-    var c = conjugation["c"][0]; //e.g. "je me suis levée"
-    var stem = verb_info['stem']; //e.g. 'l' or 'parl' or empty (if irregular)
-    var ending = c; // ending defaults to entire conjugation
+    let stems = [];
+    let endings = [];
     var conjugatedPronoun = "";
-    var pronounLast = false; // e.g. "por sermos nós"
+    //iterate through the primary conjugation and one or more alterates
+    for (var i=0; i<conjugation["c"].length; ++i) {
+        var c = conjugation["c"][i]; //e.g. "je me suis levée"
+        let stem = verb_info['stem'] //e.g. 'l' or 'parl' or empty (if irregular)
+        var ending = c; // ending defaults to entire conjugation
+        var pronounLast = false; // e.g. "por sermos nós"
 
-    if (c != "-") {
-        if ("pr" in conjugation) {
-            conjugatedPronoun = extractPronounConjugation(c, conjugation["pr"]);
+        if (c != "-") {
+            if ("pr" in conjugation && conjugatedPronoun.length == 0) {
+                conjugatedPronoun = extractPronounConjugation(c, conjugation["pr"]);
+                if (conjugatedPronoun.length > 0) {
+                    if (c.endsWith(conjugatedPronoun)) {
+                        pronounLast = true;
+                    } else {
+                        console.log("does not end with pronoun");
+                    }
+                }
+            }
+            //first extract the conjugated pronoun e.g. "je me suis levée" -> "je me", "suis levée"
+            //then split using stem, if applicable e.g. "suis levée" -> "suis l" and "evée"
             if (conjugatedPronoun.length > 0) {
-                if (c.endsWith(conjugatedPronoun)) {
-                    pronounLast = true;
+                if (pronounLast) {
+                    // e.g. "por sermos nós" -> "por sermos"
+                    c = c.substring(0, c.lastIndexOf(conjugatedPronoun)).trim();
                 } else {
-                    console.log("does not end with pronoun");
+                    // e.g. "je me suis levée" -> "suis levée"
+                    c = c.substring(conjugatedPronoun.length).trim();
+                }
+            }
+
+            ending = c; //ending defaults to the whole verb conjugation (except pronoun)
+            if (stem.length > 0) {
+                var stem_idx = c.lastIndexOf(stem);
+                if (stem_idx != -1) {
+                    ending = c.slice(stem_idx + stem.length);
+                    //include helping verb w/ stem
+                    stem = c.slice(0, stem_idx + stem.length).trim();
                 }
             }
         }
-        //first extract the conjugated pronoun e.g. "je me suis levée" -> "je me", "suis levée"
-        //then split using stem, if applicable e.g. "suis levée" -> "suis l" and "evée"
-        if (conjugatedPronoun.length > 0) {
-            if (pronounLast) {
-                // e.g. "por sermos nós" -> "por sermos"
-                c = c.substring(0, c.lastIndexOf(conjugatedPronoun)).trim();
-            } else {
-                // e.g. "je me suis levée" -> "suis levée"
-                c = c.substring(conjugatedPronoun.length).trim();
-            }
-        }
-
-        ending = c; //ending defaults to the whole verb conjugation (except pronoun)
-        if (stem.length > 0) {
-            var stem_idx = c.lastIndexOf(stem);
-            if (stem_idx != -1) {
-                ending = c.slice(stem_idx + stem.length);
-                //include helping verb w/ stem
-                stem = c.slice(0, stem_idx + stem.length).trim();
-            }
-        }
+        stems.push(stem);
+        endings.push(ending);
     }
     
+
     var html = "<tr class=\"conjugation" + gender_class + "\">";
     var pronoun = "";
     if (conjugatedPronoun.length > 0) {
@@ -221,7 +232,16 @@ function gen_conjugation(verb_info, conjugation) {
         pronoun = "(" + conjugation["pr"] + ")";
     }
     var pronounHtml = "<div>" + pronoun + "</div>";
-    var verbHtml = "<div>" + stem + "<span class=\"highlight\">" + ending + '</span></div>';
+    var verbHtml = "<div>";
+    for (var i=0; i<stems.length; ++i) {
+        let stem = stems[i];
+        let ending = endings[i];
+        verbHtml += stem + "<span class=\"highlight\">" + ending + '</span>';
+        if (i < (stems.length-1)) {
+            verbHtml += ",&nbsp;";
+        }
+    }
+    verbHtml += '</div>';
     html += "<td>";
     // show number only if pronoun not in conjugation
     if (!("p" in conjugation) && "n" in conjugation) {
