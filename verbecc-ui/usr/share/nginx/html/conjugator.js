@@ -84,7 +84,7 @@ pronounListIt = pronounListIt.concat(["io mi", "tu ti", "lui si", "lei si", "noi
 pronounListIt = pronounListIt.concat(["io", "tu", "lui", "lei", "noi", "voi", "loro"]);
 
 pronounListPt = []
-pronounListPt = pronounListPt.concat(["eu me", "tu te", "ele se", "ela se", "você se", "nós nos", "vós se", "eles se", "elas se", "vocês se"]);
+pronounListPt = pronounListPt.concat(["eu me", "tu te", "ele se", "ela se", "você se", "nós nos", "vós vos", "eles se", "elas se", "vocês se"]);
 pronounListPt = pronounListPt.concat([ "eles", "elas", "vocês", "eu", "tu", "ele", "ela", "você", "nós", "vós"]);
 
 pronounListRo = []
@@ -110,14 +110,15 @@ langPronounsDict["ro"] = pronounListRo;
 // leaves the helping verb (if present) with the conjugation
 // keeps subjective relative pronoun (e.g. "que"/"quando") (if present)
 // e.g.
-// - "yo soy" -> "yo"
-// - "j'ai" -> "j'"
-// - "je me suis levée" -> "je me"
-// - "que nous nous levassions" -> "que nous nous" 
-// - "tu t'es levée" -> "tu t'"
-// - "él sea" -> "él"  (must not match "él se")
-// - "che lui sia" -> "che lui" (must not match "lui si")
-// - "por sermos nós" -> "nós" 
+// - es: "yo soy" -> "yo"
+// - fr: "j'ai" -> "j'"
+// - fr: "je me suis levée" -> "je me"
+// - fr: "que nous nous levassions" -> "que nous nous" 
+// - fr: "tu t'es levée" -> "tu t'"
+// - es: "él sea" -> "él"  (must not match "él se")
+// - it: "che lui sia" -> "che lui" (must not match "lui si")
+// - es: "por sermos nós" -> "nós" 
+// - pt: "quando vós vos eterizardes" -> "quando vós vos"
 //
 // TODO: The current implementation is overly complex and will be 
 // replaced once aux verb stem is added to the verbecc conjugation data.
@@ -150,11 +151,12 @@ function extractPronounConjugation(s, pronoun) {
                 continue;
             }
             // Avoid matching "on" in "levon" or "vous" in "levez-vous"
-            // So ignore the match unless at start of string or preceded by space or apostrophe
-            // e.g. in the case of "qu'il se"
+            // So ignore the match unless at start of string or preceded by space (1) or apostrophe (2)
+            // e.g. (1) "quando vós vos"
+            // e.g. (2) "qu'il se"
             if (pronoun_idx != 0) {     
                 let prevChar = s[pronoun_idx - 1];        
-                if (prevChar in [" ", '']) {
+                if (!prevChar in [" ", "'",]) {
                     continue;
                 } 
             }
