@@ -3,7 +3,7 @@
 #### Web front-end for verbecc-svc
 
 #### Live demo
-- [verbe.cc](http://verbe.cc)
+- [verbe.cc](https://verbe.cc)
 
 #### Features
 - Dockerized
